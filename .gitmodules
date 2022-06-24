@@ -1,0 +1,3 @@
+[submodule "CBQN"]
+	path = CBQN
+	url = https://github.com/dzaima/CBQN

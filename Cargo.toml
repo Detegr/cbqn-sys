@@ -1,0 +1,8 @@
+[package]
+name = "cbqn-sys"
+version = "0.1.0"
+edition = "2021"
+links = "cbqn"
+
+[build-dependencies]
+bindgen = "0.59.2"
