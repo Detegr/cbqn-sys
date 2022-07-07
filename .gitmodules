@@ -2,3 +2,7 @@
 	path = CBQN
 	url = https://github.com/dzaima/CBQN
 	branch = master
+[submodule "CBQN_bytecode"]
+	path = CBQN_bytecode
+	url = https://github.com/dzaima/CBQN
+	branch = bytecode
