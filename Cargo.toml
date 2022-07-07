@@ -1,8 +1,17 @@
 [package]
-name = "cbqn-sys"
-version = "0.1.0"
+authors = ["Antti Keränen <detegr@rbx.email>"]
+categories = ["external-ffi-bindings", "compilers"]
+description = "FFI bindings to CBQN"
+documentation = "https://detegr.github.io/cbqn-sys/cbqn_sys"
 edition = "2021"
+homepage = "https://github.com/Detegr/cbqn-sys"
+keywords = ["BQN", "APL", "array"]
+license-file = "LICENSE"
 links = "cbqn"
+name = "cbqn-sys"
+readme = "README.md"
+repository = "https://github.com/Detegr/cbqn-sys.git"
+version = "0.0.1"
 
 [build-dependencies]
 bindgen = "0.59.2"
