@@ -9,6 +9,11 @@ use std::{env, fs, path::PathBuf, process::Command};
 fn main() {
     let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
     let cbqn_dir = out_dir.join("CBQN");
+    let ld_libs = if cfg!(target_os = "macos") {
+        format!("LD_LIBS={}", "-lffi")
+    } else {
+        format!("")
+    };
 
     dir::remove(&cbqn_dir).unwrap();
 
@@ -21,9 +26,12 @@ fn main() {
     let cbqn_build = Command::new("make")
         .arg("shared-o3")
         .arg("libcbqn.so")
+        .arg(ld_libs)
         .current_dir(&cbqn_dir)
         .status()
         .expect("make");
+
+    dbg!(cbqn_build);
 
     if !cbqn_build.success() {
         std::process::exit(1);
