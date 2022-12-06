@@ -31,8 +31,6 @@ fn main() {
         .status()
         .expect("make");
 
-    dbg!(cbqn_build);
-
     if !cbqn_build.success() {
         std::process::exit(1);
     }
