@@ -9,6 +9,7 @@ use std::{env, fs, path::PathBuf, process::Command};
 fn main() {
     let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
     let cbqn_dir = out_dir.join("CBQN");
+    let bytecode_dir = cbqn_dir.join("build/bytecodeLocal");
 
     dir::remove(&cbqn_dir).unwrap();
 
@@ -16,7 +17,13 @@ fn main() {
     dir::copy("CBQN", &out_dir, &dir::CopyOptions::new())
         .expect("expected to copy CBQN to $OUT_DIR/CBQN");
 
-    copy_bytecode(&cbqn_dir);
+    fs::create_dir(&bytecode_dir).expect("expected to create build/bytecodeLocal");
+    dir::copy(
+        cbqn_dir.join("build/bytecodeSubmodule/gen"),
+        &bytecode_dir,
+        &dir::CopyOptions::new(),
+    )
+    .expect("expected to copy prebuilt bytecode to local bytecode to avoid using git during build");
 
     let cbqn_build = Command::new("make")
         .arg("shared-o3")
@@ -50,23 +57,4 @@ fn main() {
     println!("cargo:rustc-link-lib=cbqn");
     println!("cargo:rerun-if-changed=build.rs");
     println!("cargo:rerun-if-changed=CBQN/include/bqnffi.h");
-}
-
-fn copy_bytecode(cbqn_dir: &PathBuf) {
-    // Copy bytecode from the bytecode submodule to prevent build.rs needing
-    // to be running git
-    let bytecode = [
-        "compiles",
-        "formatter",
-        "runtime0",
-        "runtime1",
-        "src",
-        "explain",
-    ];
-    for bc in bytecode {
-        let bc_file = PathBuf::from("src/gen").join(bc);
-        let bc_path = PathBuf::from("CBQN_bytecode").join(&bc_file);
-        fs::copy(&bc_path, cbqn_dir.join(bc_file)).expect("bytecode file copy");
-    }
-    fs::File::create(cbqn_dir.join("src/gen/customRuntime")).unwrap();
 }
