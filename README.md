@@ -15,3 +15,7 @@ The `bindgen` feature generates new bindings using [Bindgen](https://docs.rs/bin
 ### No features
 
 Building without features gives only the API to CBQN. Used with [cbqn-rs](https://github.com/Detegr/cbqn-rs) WASI backend for example.
+
+## License
+
+Licensed either under GPLv3, LGPLv3 or MPL 2.0 following the licensing of [CBQN](https://github.com/dzaima/CBQN/).
